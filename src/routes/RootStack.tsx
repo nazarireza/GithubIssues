@@ -1,9 +1,11 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 import { useTranslation } from '../assets/dictionary';
 import { BookmarkedIssuesPage } from '../components/pages/BookmarkedIssuesPage';
 import { ConfigurationPage } from '../components/pages/ConfigurationPage';
 import { IssueDetailPage } from '../components/pages/IssueDetailPage';
 import { IssuesPage } from '../components/pages/IssuesPage';
+import { RootState } from '../store';
 import { Routes } from './types';
 
 const RootStackNavigator = createNativeStackNavigator();
@@ -11,8 +13,13 @@ const RootStackNavigator = createNativeStackNavigator();
 export function RootStack() {
   const { t } = useTranslation();
 
+  const { isInit, isConfigured } = useSelector((state: RootState) => state.app);
+  if (!isInit) return <></>;
+
   return (
-    <RootStackNavigator.Navigator>
+    <RootStackNavigator.Navigator
+      initialRouteName={isConfigured ? Routes.Issues : Routes.Configuration}
+    >
       <RootStackNavigator.Screen
         name={Routes.Configuration}
         component={ConfigurationPage}
