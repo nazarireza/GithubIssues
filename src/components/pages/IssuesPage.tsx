@@ -63,7 +63,14 @@ export const IssuesPage: RootStackComponent<Routes.Issues> = memo(
     }, [finished, result.isFetching, items.length, state]);
 
     const renderItem: ListRenderItem<IssueDto> = useCallback(
-      ({ item }) => <IssueItem item={item} />,
+      ({ item }) => (
+        <IssueItem
+          item={item}
+          onPress={() =>
+            navigation.navigate(Routes.IssueDetail, { issueNumber: item.number })
+          }
+        />
+      ),
       []
     );
 
@@ -81,7 +88,7 @@ export const IssuesPage: RootStackComponent<Routes.Issues> = memo(
           data={items}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <Space />}
-          keyExtractor={(item) => `${item.id}`}
+          keyExtractor={(item) => `${item.number}`}
           onEndReached={onEndReached}
           onEndReachedThreshold={0.2}
           ListFooterComponent={() =>

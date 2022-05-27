@@ -1,13 +1,45 @@
-import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { memo, useEffect } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 import { RootStackComponent, Routes } from '../../routes/types';
+import { useGetSingleIssueQuery } from '../../services/api';
+import { RootState } from '../../store';
+import { LoadingContainer } from '../atoms/LoadingContainer';
+import { IssueDetailItem } from '../molecules/IssueDetailItem';
+import { RetryRequest } from '../molecules/RetryRequest';
 
 export const IssueDetailPage: RootStackComponent<Routes.IssueDetail> = memo(
-  ({ navigation, route }) => {
+  ({
+    navigation,
+    route: {
+      params: { issueNumber },
+    },
+  }) => {
+    const { organization, repository } = useSelector(
+      (state: RootState) => state.app
+    );
+
+    const { data, refetch, ...result } = useGetSingleIssueQuery({
+      organization: organization as string,
+      repository: repository as string,
+      issueNumber,
+    });
+
+    useEffect(
+      () =>
+        navigation.setOptions({
+          title: `Issue #${issueNumber}`,
+        }),
+      []
+    );
+
     return (
-      <View style={styles.container}>
-        <Text>Issue Detail Page</Text>
-      </View>
+      <LoadingContainer style={styles.container} isBusy={result.isLoading}>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {result.isError && <RetryRequest onRetry={refetch} />}
+          {data && <IssueDetailItem item={data} />}
+        </ScrollView>
+      </LoadingContainer>
     );
   }
 );
@@ -15,7 +47,9 @@ export const IssueDetailPage: RootStackComponent<Routes.IssueDetail> = memo(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  scrollContainer: {
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
 });

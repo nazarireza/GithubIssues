@@ -1,7 +1,7 @@
 export type IssueState = 'open' | 'closed' | 'all';
 
 export type IssueDto = {
-  id: number;
+  number: number;
   title: string;
   body: string;
   state: IssueState;
@@ -14,4 +14,10 @@ export type GetIssueModel = {
   page?: number;
   per_page?: number;
   state?: IssueState;
+};
+
+export type GetSingleIssueModel = {
+  organization: string;
+  repository: string;
+  issueNumber: number;
 };
