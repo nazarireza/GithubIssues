@@ -5,6 +5,8 @@ const en = {
   Repository: 'Repository',
   'Go to Issues': 'Go to Issues',
   "Let's Start": "Let's Start",
+  "Something's Wrong": "Something's Wrong",
+  'Retry': 'Retry'
 };
 
 i18n.translations = {

@@ -1,4 +1,4 @@
-export type IssueState = 'open' | 'closed';
+export type IssueState = 'open' | 'closed' | 'all';
 
 export type IssueDto = {
   id: number;

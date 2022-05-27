@@ -11,7 +11,7 @@ export const api = createApi({
   endpoints: (build) => ({
     getIssues: build.query<IssueDto[], GetIssueModel>({
       query: ({
-        state,
+        state = 'open',
         page = 0,
         per_page = 10,
         organization,
@@ -22,3 +22,5 @@ export const api = createApi({
     }),
   }),
 });
+
+export const { useLazyGetIssuesQuery } = api;
