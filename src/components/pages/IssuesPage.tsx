@@ -1,15 +1,15 @@
 import React, { memo, useCallback, useEffect, useState } from 'react';
-import { StyleSheet, FlatList, ListRenderItem } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootStackComponent, Routes } from '../../routes/types';
 import { useLazyGetIssuesQuery } from '../../services/api';
 import { IssueDto, IssueState } from '../../services/types';
 import { RootState } from '../../store';
+import { IconButton } from '../atoms/IconButton';
 import { LoadingContainer } from '../atoms/LoadingContainer';
 import { Space } from '../atoms/Space';
-import { IssueItem } from '../molecules/IssueItem';
-import { RetryRequest } from '../molecules/RetryRequest';
 import { KeyValueData, SelectableList } from '../molecules/SelectableList';
+import { IssuesList } from '../muscles/IssueList';
 
 const states: KeyValueData<IssueState>[] = [
   { id: 'all', value: 'All' },
@@ -27,6 +27,19 @@ export const IssuesPage: RootStackComponent<Routes.Issues> = memo(
 
     const { organization, repository } = useSelector(
       (state: RootState) => state.app
+    );
+
+    useEffect(
+      () =>
+        navigation.setOptions({
+          headerRight: () => (
+            <IconButton
+              name="bookmark-outline"
+              onPress={() => navigation.navigate(Routes.BookmarkedIssues)}
+            />
+          ),
+        }),
+      []
     );
 
     const [get, result] = useLazyGetIssuesQuery();
@@ -62,18 +75,6 @@ export const IssuesPage: RootStackComponent<Routes.Issues> = memo(
       }).then((result) => onGetResult(result.data || [], false));
     }, [finished, result.isFetching, items.length, state]);
 
-    const renderItem: ListRenderItem<IssueDto> = useCallback(
-      ({ item }) => (
-        <IssueItem
-          item={item}
-          onPress={() =>
-            navigation.navigate(Routes.IssueDetail, { issueNumber: item.number })
-          }
-        />
-      ),
-      []
-    );
-
     return (
       <LoadingContainer style={styles.container} isBusy={result.isFetching}>
         <Space size="medium" />
@@ -83,17 +84,11 @@ export const IssuesPage: RootStackComponent<Routes.Issues> = memo(
           onChangeItem={({ id }) => setState(id)}
         />
         <Space />
-        <FlatList
-          contentContainerStyle={styles.scrollContainer}
-          data={items}
-          renderItem={renderItem}
-          ItemSeparatorComponent={() => <Space />}
-          keyExtractor={(item) => `${item.number}`}
+        <IssuesList
+          items={items}
           onEndReached={onEndReached}
-          onEndReachedThreshold={0.2}
-          ListFooterComponent={() =>
-            result.isError ? <RetryRequest onRetry={onEndReached} /> : null
-          }
+          hasError={result.isError}
+          isBusy={result.isFetching}
         />
       </LoadingContainer>
     );
@@ -103,9 +98,5 @@ export const IssuesPage: RootStackComponent<Routes.Issues> = memo(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  scrollContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 24,
   },
 });

@@ -40,16 +40,12 @@ export const appSlice = createSlice({
       state.repository = action.payload.repository;
       state.isInit = true;
       state.isConfigured = action.payload.organization !== null;
-
-      console.log(action.payload);
     });
 
     builder.addCase(setConfigurations, (state, action) => {
       state.organization = action.payload.organization;
       state.repository = action.payload.repository;
       state.isConfigured = true;
-
-      console.log(action.payload);
 
       AsyncStorage.setItem('organization', action.payload.organization);
       AsyncStorage.setItem('repository', action.payload.repository);

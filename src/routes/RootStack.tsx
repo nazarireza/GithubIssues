@@ -31,6 +31,9 @@ export function RootStack() {
       <RootStackNavigator.Screen
         name={Routes.BookmarkedIssues}
         component={BookmarkedIssuesPage}
+        options={{
+          title: t('Bookmarked Issues'),
+        }}
       />
       <RootStackNavigator.Screen
         name={Routes.IssueDetail}

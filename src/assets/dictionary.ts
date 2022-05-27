@@ -6,7 +6,8 @@ const en = {
   'Go to Issues': 'Go to Issues',
   "Let's Start": "Let's Start",
   "Something's Wrong": "Something's Wrong",
-  'Retry': 'Retry'
+  'Retry': 'Retry',
+  'Bookmarked Issues': 'Bookmarked Issues'
 };
 
 i18n.translations = {
