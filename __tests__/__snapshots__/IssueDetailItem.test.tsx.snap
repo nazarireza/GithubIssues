@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<IssueDetailItem /> renders correctly 1`] = `
+<View>
+  <Text
+    style={
+      Object {
+        "fontSize": 16,
+        "fontWeight": "bold",
+      }
+    }
+  >
+    title1
+  </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={false}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "flex-start",
+        "backgroundColor": "rgba(0,0,0,.1)",
+        "borderRadius": 5,
+        "justifyContent": "center",
+        "opacity": 1,
+        "padding": 8,
+      }
+    }
+    testID="bookmark"
+  >
+    <Icon
+      name="star-outline"
+      size={30}
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+  <View
+    style={Object {}}
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "flex-start",
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+          "justifyContent": "flex-start",
+          "marginBottom": 10,
+          "marginTop": 10,
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={Object {}}
+      >
+        <Text
+          style={
+            Array [
+              Object {},
+              Object {},
+            ]
+          }
+        >
+          ##body1
+        </Text>
+      </Text>
+    </View>
+  </View>
+</View>
+`;

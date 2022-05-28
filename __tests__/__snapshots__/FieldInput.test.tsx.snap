@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FieldInput /> renders correctly 1`] = `
+<View>
+  <Text />
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+  <TextInput
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#fff",
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        undefined,
+      ]
+    }
+    testID="input"
+  />
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`<FieldInput /> renders correctly with error 1`] = `
+<View>
+  <Text />
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+  <TextInput
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#fff",
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        undefined,
+      ]
+    }
+    testID="input"
+  />
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+  <Text
+    style={
+      Object {
+        "color": "red",
+      }
+    }
+  >
+    error1, error2
+  </Text>
+</View>
+`;
+
+exports[`<FieldInput /> renders correctly with title 1`] = `
+<View>
+  <Text>
+    title1
+  </Text>
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+  <TextInput
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#fff",
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+        },
+        undefined,
+      ]
+    }
+    testID="input"
+  />
+  <View
+    style={
+      Object {
+        "height": 8,
+        "width": 8,
+      }
+    }
+  />
+</View>
+`;

@@ -1,7 +1,7 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { IssueDto } from '../../services/types';
 
-interface BookmarkState {
+export type BookmarkState = {
   items: IssueDto[];
 }
 

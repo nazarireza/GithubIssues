@@ -4,7 +4,7 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import Icons from '@expo/vector-icons/MaterialCommunityIcons';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 type IconButtonProps = {
   name: 'star' | 'star-outline' | 'bookmark-outline';
@@ -18,7 +18,7 @@ export const IconButton: React.FC<IconButtonProps & TouchableOpacityProps> =
         style={[styles.container, style]}
         {...rest}
       >
-        <Icons name={name} size={30} />
+        <Icon name={name} size={30} />
       </TouchableOpacity>
     );
   });

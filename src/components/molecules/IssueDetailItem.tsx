@@ -1,40 +1,27 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { IssueDto } from '../../services/types';
 import { Label } from '../atoms/Label';
 import { Space } from '../atoms/Space';
 import Markdown from 'react-native-markdown-display';
 import { IconButton } from '../atoms/IconButton';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { bookmark, unBookmark } from '../../store/slices/bookmarkSlice';
 
 type IssueDetailItemProps = {
   item: IssueDto;
+  isBookmarked?: boolean;
+  onToggleBookmark?: () => void;
 };
 
 export const IssueDetailItem: React.FC<IssueDetailItemProps> = memo(
-  ({ item }) => {
-    const dispatch = useDispatch();
-    const { items } = useSelector((state: RootState) => state.bookmark);
-
-    const isBookmarked = useMemo(
-      () => items.findIndex((p) => p.number === item.number) !== -1,
-      [items, item]
-    );
-
-    const toggleBookmark = useCallback(() => {
-      if (!isBookmarked) dispatch(bookmark(item));
-      else dispatch(unBookmark(item));
-    }, [item, isBookmarked]);
-
+  ({ item, isBookmarked = false, onToggleBookmark }) => {
     return (
       <View>
         <Label style={styles.title}>{item.title}</Label>
         <Space />
         <IconButton
+          testID="bookmark"
           name={isBookmarked ? 'star' : 'star-outline'}
-          onPress={toggleBookmark}
+          onPress={onToggleBookmark}
         />
         <Space />
         <Markdown>{item.body}</Markdown>

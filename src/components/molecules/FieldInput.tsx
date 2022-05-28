@@ -17,7 +17,7 @@ export const FieldInput = memo(
         <View>
           <Label>{title}</Label>
           <Space />
-          <Input ref={ref} {...rest} />
+          <Input testID="input" ref={ref} {...rest} />
           <Space />
           {hasError && (
             <Label style={styles.errorMessage}>{errorMessages?.[0]}</Label>

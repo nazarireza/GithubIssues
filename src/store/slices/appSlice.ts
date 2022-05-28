@@ -1,7 +1,7 @@
 import { createAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type AppState = {
+export type AppState = {
   isInit: boolean;
   organization: string | null;
   repository: string | null;
