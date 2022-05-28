@@ -4,7 +4,11 @@ This project is prepared for coding exercise purpose and is a mock implementatio
 
 ## How to run
 
+### Install Expo-Cli
+`yarn global add expo-cli`
+
 > Firstly, You have to run **yarn** or **npm install** to download the node dependencies
+
 
 ### Android
 
@@ -13,6 +17,7 @@ You can use the **yarn android** on the command line to run the android version 
 ### IOS
 
 You can use the **yarn ios** to run on the simulator. Note that to run on the physical IOS phone you need a **Apple Developer** account.
+
 
 ## Programming Language
 
