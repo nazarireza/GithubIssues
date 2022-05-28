@@ -21,3 +21,13 @@ export type GetSingleIssueModel = {
   repository: string;
   issueNumber: number;
 };
+
+export type RepositoryDto = {
+  id: number;
+  name: string;
+};
+
+export type GetRepositoryModel = {
+  organization: string;
+  repository: string;
+};

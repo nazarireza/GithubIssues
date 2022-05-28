@@ -20,7 +20,7 @@ export const getConfigurations = createAsyncThunk(
   async () => {
     const organization = await AsyncStorage.getItem('organization');
     const repository = await AsyncStorage.getItem('repository');
-
+    
     return { organization, repository };
   }
 );

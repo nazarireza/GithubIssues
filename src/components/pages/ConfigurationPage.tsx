@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
-import { View, StyleSheet, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, TextInput } from 'react-native';
 import { RootStackComponent, Routes } from '../../routes/types';
 import { Button } from '../atoms/Button';
 import { Space } from '../atoms/Space';
@@ -8,6 +8,9 @@ import { useTranslation } from '../../assets/dictionary';
 import { setConfigurations } from '../../store/slices/appSlice';
 import { useValidation } from 'react-simple-form-validator';
 import { useDispatch } from 'react-redux';
+import { useLazyGetRepoDetailQuery } from '../../services/api';
+import { Label } from '../atoms/Label';
+import { LoadingContainer } from '../atoms/LoadingContainer';
 
 enum fields {
   organization = 'organization',
@@ -19,6 +22,7 @@ export const ConfigurationPage: RootStackComponent<Routes.Configuration> = memo(
     const { t } = useTranslation();
     const [organization, setOrganization] = useState('');
     const [repository, setRepository] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const [touchedFields, setTouchedFields] = useState({
       organization: false,
@@ -28,6 +32,8 @@ export const ConfigurationPage: RootStackComponent<Routes.Configuration> = memo(
     const repositoryInputRef = useRef<TextInput>(null);
 
     const dispatch = useDispatch();
+
+    const [getRepo, result] = useLazyGetRepoDetailQuery();
 
     const { isFieldInError, getErrorsInField, isFormValid } = useValidation({
       fieldsRules: {
@@ -43,19 +49,30 @@ export const ConfigurationPage: RootStackComponent<Routes.Configuration> = memo(
     const onSubmit = useCallback(() => {
       if (!isFormValid) return;
 
-      dispatch(
-        setConfigurations({
-          organization: organization.trim() as string, // validation was checked by the validator (don't worry about it)
-          repository: repository.trim() as string,
-        })
-      );
+      // validation was checked by the validator (don't worry about it)
+      const normalizedOrganization = organization.trim() as string;
+      const normalizedRepository = repository.trim() as string;
 
-      // The user will not be allowed to navigate back (UX)
-      navigation.replace(Routes.Issues);
+      getRepo({
+        organization: normalizedOrganization,
+        repository: normalizedRepository,
+      }).then((r) => {
+        if (r.isSuccess) {
+          dispatch(
+            setConfigurations({
+              organization: normalizedOrganization,
+              repository: normalizedRepository,
+            })
+          );
+
+          // The user will not be allowed to navigate back (UX)
+          navigation.replace(Routes.Issues);
+        } else setErrorMessage(t('Organization or Repository is not valid'));
+      });
     }, [organization, repository, isFormValid]);
 
     return (
-      <View style={styles.container}>
+      <LoadingContainer style={styles.container} isBusy={result.isFetching}>
         <ScrollView>
           <FieldInput
             title={t('Organization')}
@@ -90,8 +107,14 @@ export const ConfigurationPage: RootStackComponent<Routes.Configuration> = memo(
             onPress={onSubmit}
             disabled={!isFormValid}
           />
+          {!!errorMessage && (
+            <>
+              <Space />
+              <Label style={styles.errorMessage}>{errorMessage}</Label>
+            </>
+          )}
         </ScrollView>
-      </View>
+      </LoadingContainer>
     );
   }
 );
@@ -101,5 +124,8 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingVertical: 24,
+  },
+  errorMessage: {
+    color: 'red',
   },
 });

@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Constants from 'expo-constants';
-import { GetIssueModel, GetSingleIssueModel, IssueDto } from './types';
+import {
+  GetIssueModel,
+  GetRepositoryModel,
+  GetSingleIssueModel,
+  IssueDto,
+  RepositoryDto,
+} from './types';
 
 export const api = createApi({
   reducerPath: 'api',
@@ -9,6 +15,12 @@ export const api = createApi({
   }),
 
   endpoints: (build) => ({
+    getRepoDetail: build.query<RepositoryDto[], GetRepositoryModel>({
+      query: ({ organization, repository }) => ({
+        url: `/repos/${organization}/${repository}`,
+      }),
+    }),
+
     getIssues: build.query<IssueDto[], GetIssueModel>({
       query: ({
         state = 'open',
@@ -29,4 +41,8 @@ export const api = createApi({
   }),
 });
 
-export const { useLazyGetIssuesQuery, useGetSingleIssueQuery } = api;
+export const {
+  useLazyGetIssuesQuery,
+  useGetSingleIssueQuery,
+  useLazyGetRepoDetailQuery,
+} = api;

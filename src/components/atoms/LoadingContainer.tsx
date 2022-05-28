@@ -13,7 +13,7 @@ export const LoadingContainer: React.FC<LoadingContainerProps & ViewProps> =
   memo(({ children, isBusy = false, style, ...rest }) => {
     const [shouldBeShow, setShouldBeShow] = useState(isBusy);
 
-    useTimeout(() => setShouldBeShow(isBusy), [isBusy], isBusy ? 500 : 0);
+    useTimeout(() => setShouldBeShow(isBusy), [isBusy], isBusy ? 200 : 0);
 
     return (
       <View {...rest} style={[styles.container, style]}>

@@ -6,8 +6,10 @@ const en = {
   'Go to Issues': 'Go to Issues',
   "Let's Start": "Let's Start",
   "Something's Wrong": "Something's Wrong",
-  'Retry': 'Retry',
-  'Bookmarked Issues': 'Bookmarked Issues'
+  Retry: 'Retry',
+  'Bookmarked Issues': 'Bookmarked Issues',
+  'Organization or Repository is not valid':
+    'Organization or Repository is not valid',
 };
 
 i18n.translations = {

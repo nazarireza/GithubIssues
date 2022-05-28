@@ -53,7 +53,11 @@ export const IssueDetailPage: RootStackComponent<Routes.IssueDetail> = memo(
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {result.isError && <RetryRequest onRetry={refetch} />}
           {data && (
-            <IssueDetailItem item={data} onToggleBookmark={onToggleBookmark} />
+            <IssueDetailItem
+              item={data}
+              isBookmarked={isBookmarked}
+              onToggleBookmark={onToggleBookmark}
+            />
           )}
         </ScrollView>
       </LoadingContainer>
